@@ -1,0 +1,54 @@
+div#resposta {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.permission {
+    border: black 0.01rem solid;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    background-color: beige;
+    min-width: 13rem;
+}
+
+p.perm-id {
+    text-align: center;
+    border: red 0.1rem solid;
+    background-color: azure;
+    margin-top: 0rem;
+}
+
+p.perm-desc:before {
+    content: 'Description:';
+    float: left;
+    width: 100%;
+    font-size: 0.8rem;
+    color: black;
+    text-align: left;
+}
+
+p.perm-desc {
+    text-align: center;
+    color: blue;
+}
+
+p.perm-rules:before {
+    content: 'Rules:';
+    float: left;
+    width: 100%;
+    font-size: 0.8rem;
+    color: black;
+    text-align: left;
+}
+
+p.perm-rules {
+    text-align: center;
+    color: blue;
+}
+
+@media screen and (max-width: 31rem){
+    .permission {
+        width: -webkit-fill-available;
+    }
+}
