@@ -7,7 +7,7 @@
     $service = new PermissionService();
 
     $login = $_POST['login'];
-    $password = $_POST['senha'];
+    $password = $_POST['password'];
 
     echo $service->retrievePermissions($login, $password);
 ?>

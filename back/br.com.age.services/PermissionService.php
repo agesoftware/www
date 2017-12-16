@@ -9,10 +9,10 @@
         }
 
         public function retrievePermissions($login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
-                    $permissions = $this->dao->retrieve();
+                    $permissions = $this->dao->retrievePermissions();
                     if(get_class($permissions) != 'ResponseMessage') {
                         return Jsonify::arrayToJson($permissions);
                     }
@@ -38,10 +38,10 @@
         }
 
         public function createPermission($permission, $login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
-                    $response = $this->dao->persist($permission);
+                    $response = $this->dao->persistPermission($permission);
                     return $response->serialize();
                 }
                 else {
@@ -62,10 +62,10 @@
         }
 
         public function updatePermission($permission, $login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
-                    $response = $this->dao->update($permission);
+                    $response = $this->dao->updatePermission($permission);
                     return $response->serialize();
                 }
                 else {
@@ -86,10 +86,10 @@
         }
 
         public function deletePermission($permission, $login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
-                    $response = $this->dao->delete($permission);
+                    $response = $this->dao->deletePermission($permission);
                     return $response->serialize();
                 }
                 else {

@@ -1,7 +1,7 @@
-// Tries to connect database
 function retrievePermissions() {
-    var url = 'http://localhost:8080/back/br.com.age.controller/PermissionController/retrieve.php';
-    var data = {login:'Administrador', senha:'admin'};
+    var host = window.location.host;
+    var url = 'http://'+host+'/back/br.com.age.controller/PermissionController/retrieve.php';
+    var data = {login:'Administrador', password:'admin'};
     var dataType = "json";
 
     $.post(url, data, function(response) {
@@ -17,6 +17,12 @@ function retrievePermissions() {
 
                 $('#resposta').append(perm);
             });
+        }
+        else {
+            var mensagem = response;
+            if(mensagem.status == 'Error') {
+                alert(mensagem.message);
+            }
         }
     }, dataType);
 }

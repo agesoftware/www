@@ -4,17 +4,17 @@
             parent::__construct();
         }
 
-        public function retrieve() {
+        public function retrieveUsers() {
             $user = new User();
             return parent::retrieve($user);
         }
 
-        public function getById($id) {
+        public function getUserById($id) {
             $user = new User();
             return parent::getById($id, $user);
         }
 
-        public function authenticate($nameOrEmail, $password) {
+        public function authenticateUser($nameOrEmail, $password) {
             try {
                 $object = new User();
                 $object->setName($nameOrEmail);
@@ -44,15 +44,15 @@
             }
         }
 
-        public function persist($user) {
+        public function persistUser($user) {
             return parent::persist($user);
         }
 
-        public function update($user) {
+        public function updateUser($user) {
             return parent::update($user);
         }
 
-        public function delete($user) {
+        public function deleteUser($user) {
             return parent::delete($user);
         }
     }

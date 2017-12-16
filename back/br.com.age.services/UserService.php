@@ -9,15 +9,15 @@
         }
 
         public function retrieveUsers($login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
-                    $users = $this->userDao->retrieve();
+                    $users = $this->userDao->retrieveUsers();
                     if($users != null && (count($users) > 0)) {
                         if(get_class($users) != 'ResponseMessage') {
                             foreach($users as &$user) {
                                 $permission = new Permission();
-                                $permission = $this->permissionDao->getById($user->getPermission());
+                                $permission = $this->permissionDao->getPermissionById($user->getPermission());
                                 $user->setPermission($permission);
                                 $user->setPassword('<secret>');
                             }
@@ -53,7 +53,7 @@
         }
 
         public function createUser($user, $login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
                     $dateTime = new DateTime();
@@ -61,7 +61,7 @@
                     $user->setCreatedAt($now);
                     $user->setUpdatedAt($now);
                     $user->setLastAccess($now);
-                    $response = $this->userDao->persist($user);
+                    $response = $this->userDao->persistUser($user);
                     return $response->serialize();
                 }
                 else {
@@ -84,7 +84,7 @@
         private function isAdmin($user) {
             $isAdmin = false;
             $permission = new Permission();
-            $permission = $this->permissionDao->getById($user->getPermission());
+            $permission = $this->permissionDao->getPermissionById($user->getPermission());
             $rules = $permission->getRules();
             $hasAdmRule = strpos($rules, 'Administrador');
             if($hasAdmRule !== false) {
@@ -97,7 +97,7 @@
         private function canUpdate($user) {
             $canUpdate = false;
 
-            $userToUpdate = $this->userDao->getById($user->getId());
+            $userToUpdate = $this->userDao->getUserById($user->getId());
 
             if($this->isAdmin($userToUpdate) && $this->isAdmin($user)) {
                 $canUpdate = true;
@@ -108,7 +108,7 @@
             else {
                 $count = 0;
                 
-                $users = $this->userDao->retrieve();
+                $users = $this->userDao->retrieveUsers();
     
                 foreach($users as $user) {
                     if($this->isAdmin($user)) {
@@ -127,11 +127,11 @@
         private function canDelete($user) {
             $canDelete = false;
 
-            $user = $this->userDao->getById($user->getId());
+            $user = $this->userDao->getUserById($user->getId());
             
             $count = 0;
             
-            $users = $this->userDao->retrieve();
+            $users = $this->userDao->retrieveUsers();
 
             foreach($users as $user) {
                 if($this->isAdmin($user)) {
@@ -147,14 +147,14 @@
         }
 
         public function updateUser($user, $login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
                     if($this->canUpdate($user)) {
                         $updatedAt = new DateTime();
                         $updatedAtAsString = $updatedAt->format('Y-m-d H:i:s');
                         $user->setUpdatedAt($updatedAtAsString);
-                        $response = $this->userDao->update($user);
+                        $response = $this->userDao->updateUser($user);
         
                         return $response->serialize();
                     }
@@ -184,11 +184,11 @@
         }
 
         public function deleteUser($user, $login, $password) {
-            $authenticatedUser = $this->userDao->authenticate($login, $password);
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
                     if($this->canDelete($user)) {
-                        $response = $this->userDao->delete($user);
+                        $response = $this->userDao->deleteUser($user);
                         return $response->serialize();
                     }
                     else {
@@ -217,7 +217,7 @@
         }
 
         public function authenticate($login, $password) {
-            $found = $this->userDao->authenticate($login, $password);
+            $found = $this->userDao->authenticateUser($login, $password);
             $className = get_class($found);
             if($found != null) {
                 if($className != 'ResponseMessage') {

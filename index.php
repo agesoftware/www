@@ -5,7 +5,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
         <meta http-equiv='X-UA-Compatible' content='ie=edge'>
 
-        <title>Bem vindo ao Imobilus</title>
+        <title>Bem vindo ao AGE - Aplicação de Gestão Estudantil</title>
 
         <link rel='stylesheet' href='resources/js/jquery-ui.structure.css' />
         <link rel='stylesheet' href='resources/js/jquery-ui.theme.css' />
@@ -13,7 +13,6 @@
         <link rel='stylesheet' type='text/css' href='resources/js/slick/slick.css'/>
         <link rel='stylesheet' type='text/css' href='resources/js/slick/slick-theme.css'/>
         <link rel='stylesheet' type='text/css' href='resources/css/main.css'/>
-        <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
 
         <script src='resources/js/jquery.js'></script>
         <script src='resources/js/jquery-ui.js'></script>
