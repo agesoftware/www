@@ -1,0 +1,126 @@
+Site
+
+Portal Direção
+Portal Aluno
+Portal Professor
+
+Matter:
+id
+name
+teacher
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+Position:
+id
+number
+name
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+Grade:
+id
+matter
+position
+student
+type
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+Address:
+id
+address
+district
+city
+state
+postal_code
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+MoreInformation:
+id
+user
+address
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+Tax:
+id
+day_assessment
+month_assessment
+year_assessment
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+Bill:
+id (bigint)
+code (string)
+description (string)
+image (string (base64))
+user (bigint = User(id))
+value (double)
+tax (bigint = Tax(id))
+pay_day (datetime)
+status ('Paga','Atrasada','Pendente','Contestada','Parcelada')
+observations (string)
+createdAt (datetime)
+createdBy (bigint = User(id))
+updatedAt (datetime)
+updatedBy (bigint = User(id))
+
+Team:
+id
+name
+degree
+round
+students
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+Exercise:
+id
+description
+type (string = {'Exercicio','Traalho','Teste','Prova'})
+team
+matter
+date
+deadline
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+ExerciseFile:
+id
+exercise
+image
+done_image
+createdAt
+createdBy
+updatedAt
+updatedBy
+
+Event:
+id
+description
+date
+images
+observations
+createdAt
+createdBy
+updatedAt
+updatedBy
