@@ -8,7 +8,7 @@
             $this->userDao = new UserDao();
         }
 
-        public function retrievePermissions($login, $password) {
+        public function retrievePermissions($login, $password) { 
             $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {

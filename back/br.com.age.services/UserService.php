@@ -8,6 +8,12 @@
             $this->userDao = new UserDao();
         }
 
+        private function restructUser($user) {
+            $permission = $this->permissionDao->getPermissionById($user->getPermission());
+            $user->setPermission($permission);
+            $user->setPassword('<secret>');
+        }
+
         public function retrieveUsers($login, $password) {
             $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
@@ -16,15 +22,12 @@
                     if($users != null && (count($users) > 0)) {
                         if(get_class($users) != 'ResponseMessage') {
                             foreach($users as &$user) {
-                                $permission = new Permission();
-                                $permission = $this->permissionDao->getPermissionById($user->getPermission());
-                                $user->setPermission($permission);
-                                $user->setPassword('<secret>');
+                                $this->restructUser($user);
                             }
                             return Jsonify::arrayToJson($users);
                         }
                         else {
-                            return $user->serialize();
+                            return $users->serialize();
                         }
                     }
                     else {
@@ -218,8 +221,9 @@
 
         public function authenticate($login, $password) {
             $found = $this->userDao->authenticateUser($login, $password);
-            $className = get_class($found);
             if($found != null) {
+                $className = get_class($found);
+
                 if($className != 'ResponseMessage') {
                     $message = new ResponseMessage();
                     $message->setMessage('Seja bem vindo '.$found->getName());
