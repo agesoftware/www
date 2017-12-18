@@ -1,15 +1,15 @@
-Site
+﻿Site
 
 Portal Direção
 Portal Aluno
 Portal Professor
 
-Permission:
+permission:
 id (bigint)
 description (string)
 rules (string = {'Administrador','Professor','Aluno'})
 
-User:
+user:
 id (bigint)
 name (string)
 password (longtext)
@@ -17,40 +17,40 @@ email (string)
 phone1 (string)
 phone2 (string)
 foto (string(base64))
-createdAt (datetime)
-updatedAt (datetime)
+created_at (datetime)
+updated_at (datetime)
 last_access (datetime)
 permission (permission = Permission(id))
 
-Matter:
+matter:
 id (bigint)
 name (string)
 teacher (user = User(id))
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-Position:
+position:
 id (bigint)
 position (int)
 description (string)
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-Grade:
+grade:
 id (bigint)
 matter (matter = Matter(id))
 position (position = Position(id))
 student (user = User(id))
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-Address:
+address:
 id (bigint)
 address (string)
 district (string)
@@ -59,31 +59,32 @@ state (string)
 postal_code (string)
 number (string)
 complement (string)
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-MoreInformation:
+more_information:
 id (bigint)
 user (user = User(id))
 address (address = Address(id))
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-Tax:
+tax:
 id (bigint)
 day_assessment (double)
 month_assessment (double)
 year_assessment (double)
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+description (string)
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-Bill:
+bill:
 id (bigint)
 code (string)
 description (string)
@@ -94,70 +95,87 @@ tax (bigint = Tax(id))
 pay_day (datetime)
 status ('Paga','Atrasada','Pendente','Contestada','Parcelada')
 observations (string)
-createdAt (datetime)
-createdBy (bigint = User(id))
-updatedAt (datetime)
-updatedBy (bigint = User(id))
+created_at (datetime)
+created_by (bigint = User(id))
+updated_at (datetime)
+updated_by (bigint = User(id))
 
-Team:
+team:
 id (bigint)
 name (string)
 degree (string)
 round (string)
-students (string(list of User(id) split by comma))
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-Exercise:
+student_in_team
+id (bigint)
+student (user = User(id))
+team (team = Team(id))
+created_by (user = User(id))
+created_at (datetime)
+updated_by (user = User(id))
+updated_at (datetime)
+
+exercise:
 id (bigint)
 description (string)
 type (string = {'Exercicio','Traalho','Teste','Prova'})
 team (team = Team(id))
 matter (matter = Matter(id))
 deadline (datetime)
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-ExerciseFile:
+exercise_file:
 id (bigint)
 exercise (exercise = Exercise(id))
 image (string(base64))
 done_image (string(base64))
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-Event:
+administrative_file:
+id (bigint)
+name (string)
+image (string(base64))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
+
+event:
 id (bigint)
 description (string)
 date (datetime)
 observations (string)
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-EventImage:
+event_image:
 id (bigint)
 image (string(base64))
 event (event = Event(id))
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
 
-StudentCheckList:
+student_check_list:
 id (bigint)
-material_description (string)
+description (string)
 value (double)
 status (string = {'Pago','Pendente','Adquirido'})
 student (user = User(id))
-createdAt (datetime)
-createdBy (user = User(id))
-updatedAt (datetime)
-updatedBy (user = User(id))
+created_at (datetime)
+created_by (user = User(id))
+updated_at (datetime)
+updated_by (user = User(id))
