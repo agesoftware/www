@@ -1,8 +1,8 @@
 <?php
     class Matter {
-        private $id = 0;
-        private $name = '';
-        private $teacher = '';
+        private $id = null;
+        private $name = null;
+        private $teacher = null;
         private $created_at = null;
         private $updated_at = null;
         private $created_by = null;

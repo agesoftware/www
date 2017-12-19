@@ -1,12 +1,12 @@
 <?php
     class User {
-        private $id = 0;
-        private $name = '';
-        private $password = '';
-        private $phone1 = '';
-        private $phone2 = '';
-        private $email = '';
-        private $foto = '';
+        private $id = null;
+        private $name = null;
+        private $password = null;
+        private $phone1 = null;
+        private $phone2 = null;
+        private $email = null;
+        private $foto = null;
         private $permission = null;
         private $created_at = null;
         private $updated_at = null;

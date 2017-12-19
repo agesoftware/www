@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('../../../classloader.php');
     header('Content-type: application/json; charset=UTF-8');
 
@@ -6,8 +7,8 @@
     
     $service = new PermissionService();
 
-    $login = $_POST['login'];
-    $password = $_POST['password'];
+    $login = $_SESSION['login'];
+    $password = $_SESSION['password'];
 
     echo $service->retrievePermissions($login, $password);
 ?>

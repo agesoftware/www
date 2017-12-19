@@ -63,10 +63,19 @@
         }
 
         public function persistUser($user) {
+            $dateTime = new DateTime();
+            $now = $dateTime->format('Y-m-d H:i:s');
+            $user->setCreatedAt($now);
+            $user->setUpdatedAt($now);
+            $user->setLastAccess($now);
+
             return parent::persist($user);
         }
 
         public function updateUser($user) {
+            $updatedAt = new DateTime();
+            $updatedAtAsString = $updatedAt->format('Y-m-d H:i:s');
+            $user->setUpdatedAt($updatedAtAsString);
             return parent::update($user);
         }
 

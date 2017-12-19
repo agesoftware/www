@@ -1,8 +1,8 @@
 <?php
     class Permission {
-        private $id = 0;
-        private $description = '';
-        private $rules = '';
+        private $id = null;
+        private $description = null;
+        private $rules = null;
 
 
         public function getId() {

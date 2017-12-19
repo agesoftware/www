@@ -46,15 +46,34 @@
             }
         }
 
+        public function getUserById($id, $login, $password) {
+            $authenticatedUser = $this->userDao->authenticateUser($login, $password);
+            if($authenticatedUser != null) {
+                if(get_class($authenticatedUser) != 'ResponseMessage') {
+                    $user = $this->userDao->getUserById();
+                    return $user;
+                }
+                else {
+                    $message = new ResponseMessage();
+                    $message->setMessage('Error: Falha de autenticação.');
+                    $message->setStatus(ResponseMessage::STATUS_ERROR);
+    
+                    return $message->serialize();
+                }
+            }
+            else {
+                $message = new ResponseMessage();
+                $message->setMessage('Error: Falha de autenticação.');
+                $message->setStatus(ResponseMessage::STATUS_ERROR);
+
+                return $message->serialize();
+            }
+        }
+
         public function createUser($user, $login, $password) {
             $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
-                    $dateTime = new DateTime();
-                    $now = $dateTime->format('Y-m-d H:i:s');
-                    $user->setCreatedAt($now);
-                    $user->setUpdatedAt($now);
-                    $user->setLastAccess($now);
                     $response = $this->userDao->persistUser($user);
                     return $response->serialize();
                 }
@@ -145,11 +164,7 @@
             if($authenticatedUser != null) {
                 if(get_class($authenticatedUser) != 'ResponseMessage') {
                     if($this->canUpdate($user)) {
-                        $updatedAt = new DateTime();
-                        $updatedAtAsString = $updatedAt->format('Y-m-d H:i:s');
-                        $user->setUpdatedAt($updatedAtAsString);
                         $response = $this->userDao->updateUser($user);
-        
                         return $response->serialize();
                     }
                     else {

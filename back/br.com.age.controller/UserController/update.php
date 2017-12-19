@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('../../../classloader.php');
     header('Content-type: application/json; charset=UTF-8');
 
@@ -7,24 +8,20 @@
     $service = new UserService();
 
     $user = new User();
-    $user->setId(1);
-    $user->setName('Administrador');
-    $user->setPassword('admin');
-    $user->setPhone1('81996729491');
-    $user->setPhone2('81988874815');
-    $user->setEmail('douglasf.filho@gmail.com');
-    $user->setPermission(1);
+    $user->setId($_POST['id']);
+    $user->setName($_POST['name']);
+    $user->setPassword($_POST['password']);
+    $user->setPhone1($_POST['phone1']);
+    $user->setPhone2($_POST['phone2']);
+    $user->setEmail($_POST['email']);
+    $user->setPermission($_POST['permission']);
     
-    $createdAt = new DateTime('2017-12-12 15:57:51');
-    $createdAtAsString = $createdAt->format('Y-m-d H:i:s');
-    $user->setCreatedAt($createdAtAsString);
-    
-    $lastAccess = new DateTime('2017-12-12 15:57:51');
-    $lastAccessAsString = $lastAccess->format('Y-m-d H:i:s');
-    $user->setLastAccess($lastAccessAsString);
+    $userToUpdate = $service->getUserById($user->getId(), $login, $password);
+    $user->setCreatedAt($userToUpdate->getCreatedAt());
+    $user->setLastAccess($userToUpdate->getLastAccess());
 
-    $login = 'Administrador';
-    $password = 'admin';
+    $login = $_SESSION['login'];
+    $password = $_SESSION['password'];
 
     echo $service->updateUser($user, $login, $password);
 ?>

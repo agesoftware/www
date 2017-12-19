@@ -8,8 +8,15 @@
     
     $service = new UserService();
 
-    $login = 'Administrador';
-    $password = 'admin';
+    $login = $_POST['login'];
+    $password = $_POST['senha'];
 
-    echo $service->authenticate($login, $password);
+    $response = $service->authenticate($login, $password);
+    
+    if(strpos($response, '"status":"Ok"') !== false) {
+        $_SESSION['login'] = $login;
+        $_SESSION['password'] = $password;
+    }
+
+    echo $response;
 ?>

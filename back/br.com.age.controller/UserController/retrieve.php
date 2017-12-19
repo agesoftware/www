@@ -8,8 +8,8 @@
     
     $service = new UserService();
 
-    $login = 'Administrador';
-    $password = 'admin';
+    $login = $_SESSION['login'];
+    $password = $_SESSION['password'];
 
     echo $service->retrieveUsers($login, $password);
 ?>

@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('../../../classloader.php');
     header('Content-type: application/json; charset=UTF-8');
 
@@ -7,16 +8,15 @@
     $service = new UserService();
 
     $user = new User();
-    $user->setId(null);
-    $user->setName('Teste');
-    $user->setPassword('teste');
-    $user->setPhone1('81988874815');
-    $user->setPhone2('81996729491');
-    $user->setEmail('douglas.f.filho@accenture.com');
-    $user->setPermission(1);
+    $user->setName($_POST['name']);
+    $user->setPassword($_POST['password']);
+    $user->setPhone1($_POST['phone1']);
+    $user->setPhone2($_POST['phone2']);
+    $user->setEmail($_POST['email']);
+    $user->setPermission($_POST['permission']);
 
-    $login = 'Administrador';
-    $password = 'admin';
+    $login = $_SESSION['login'];
+    $password = $_SESSION['password'];
 
     echo $service->createUser($user, $login, $password);
 ?>

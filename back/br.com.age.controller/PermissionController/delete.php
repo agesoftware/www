@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('../../../classloader.php');
     header('Content-type: application/json; charset=UTF-8');
 
@@ -7,10 +8,10 @@
     $service = new PermissionService();
 
     $permission = new Permission();
-    $permission->setId(2);
+    $permission->setId($_POST['id']);
     
-    $login = 'Administrador';
-    $password = 'admin';
+    $login = $_SESSION['login'];
+    $password = $_SESSION['password'];
 
     echo $service->deletePermission($permission, $login, $password);
 ?>

@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('../../../classloader.php');
     header('Content-type: application/json; charset=UTF-8');
 
@@ -7,12 +8,11 @@
     $service = new PermissionService();
 
     $permission = new Permission();
-    $permission->setId(null);
-    $permission->setDescription('Teste');
-    $permission->setRules('Teste');
+    $permission->setDescription($_POST['description']);
+    $permission->setRules($_POST['rules']);
 
-    $login = 'Administrador';
-    $password = 'admin';
+    $login = $_SESSION['login'];
+    $password = $_SESSION['password'];
 
     echo $service->createPermission($permission, $login, $password);
 ?>
