@@ -12,22 +12,26 @@
 
         private function restructMatter($matter) {
             $teacher = $this->userDao->getUserById($matter->getTeacher());
-            $this->restructUser($teacher);
+            $teacher = $this->restructUser($teacher);
             $matter->setTeacher($teacher);
 
             $createdBy = $this->userDao->getUserById($matter->getCreatedBy());
-            $this->restructUser($createdBy);
+            $createdBy = $this->restructUser($createdBy);
             $matter->setCreatedBy($createdBy);
 
             $updatedBy = $this->userDao->getUserById($matter->getUpdatedBy());
-            $this->restructUser($updatedBy);
+            $updatedBy = $this->restructUser($updatedBy);
             $matter->setUpdatedBy($updatedBy);
+
+            return $matter;
         }
 
         private function restructUser($user) {
             $permission = $this->permissionDao->getPermissionById($user->getPermission());
             $user->setPermission($permission);
             $user->setPassword('<secret>');
+
+            return $user;
         }
 
         public function retrieveMatters($login, $password) {
@@ -38,7 +42,7 @@
                     if($matters != null && (count($matters) > 0)) {
                         if(get_class($matters) != 'ResponseMessage') {
                             foreach($matters as &$matter) {
-                                $this->restructMatter($matter);
+                                $matter = $this->restructMatter($matter);
                             }
                             return Jsonify::arrayToJson($users);
                         }

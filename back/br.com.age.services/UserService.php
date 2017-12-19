@@ -8,12 +8,6 @@
             $this->userDao = new UserDao();
         }
 
-        private function restructUser($user) {
-            $permission = $this->permissionDao->getPermissionById($user->getPermission());
-            $user->setPermission($permission);
-            $user->setPassword('<secret>');
-        }
-
         public function retrieveUsers($login, $password) {
             $authenticatedUser = $this->userDao->authenticateUser($login, $password);
             if($authenticatedUser != null) {
@@ -21,9 +15,6 @@
                     $users = $this->userDao->retrieveUsers();
                     if($users != null && (count($users) > 0)) {
                         if(get_class($users) != 'ResponseMessage') {
-                            foreach($users as &$user) {
-                                $this->restructUser($user);
-                            }
                             return Jsonify::arrayToJson($users);
                         }
                         else {

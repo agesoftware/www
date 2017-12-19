@@ -4,14 +4,29 @@
             parent::__construct();
         }
 
+        private function restructPermission($user) {
+            $permissionDao = new PermissionDao();
+            $user->setPermission($permissionDao->getPermissionById($user->getPermission()));
+            return $user;
+        }
+
         public function retrieveUsers() {
             $user = new User();
-            return parent::retrieve($user);
+            $users = parent::retrieve($user);
+            foreach($users as &$user) {
+                $user = $this->restructPermission($user);
+            }
+
+            return $users;
         }
 
         public function getUserById($id) {
             $user = new User();
-            return parent::getById($id, $user);
+            $user = parent::getById($id, $user);
+            
+            $user = $this->restructPermission($user);
+
+            return $user;
         }
 
         public function authenticateUser($nameOrEmail, $password) {
@@ -31,6 +46,9 @@
                     $statement->execute();
                     $statement->setFetchMode(PDO::FETCH_CLASS, $class);
                     $found = $statement->fetch();
+
+                    $found = $this->restructPermission($found);
+
                     return $found;
                 }
                 else {
